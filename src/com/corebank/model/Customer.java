@@ -1,21 +1,21 @@
 package com.corebank.model;
 
 public class Customer {
-    private int customerId;
+    private String customerId;
     private String name;
     private String email;
     
-    public Customer(int customerId, String name, String email) {
+    public Customer(String customerId, String name, String email) {
         this.customerId = customerId;
         this.name = name;
         this.email = email;
     }
 
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

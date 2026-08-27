@@ -8,18 +8,18 @@ import java.util.Optional;
 
 import com.corebank.model.Customer;
 
-public class CustomerRepository implements Repository<Customer, Integer> {
+public class CustomerRepository implements Repository<Customer, String> {
 
-    private Map<Integer, Customer> customers = new HashMap<>();
+    private Map<String, Customer> customers = new HashMap<>();
 
     @Override
-    public Customer save(Integer customerId, Customer customer) {
+    public Customer save(String customerId, Customer customer) {
         customers.put(customerId, customer);
         return customer;
     }
 
     @Override
-    public Optional<Customer> findById(Integer customerId) {
+    public Optional<Customer> findById(String customerId) {
         return Optional.ofNullable(customers.get(customerId));
     }
 
@@ -29,7 +29,7 @@ public class CustomerRepository implements Repository<Customer, Integer> {
     }
 
     @Override
-    public void deleteById(Integer customerId) {
+    public void deleteById(String customerId) {
         customers.remove(customerId);
     }
     

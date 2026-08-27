@@ -9,13 +9,12 @@ public class Transaction {
     private double amount;
     private LocalDateTime timestamp;
 
-    public Transaction(String transactionId, String accountNumber, TransactionType type, double amount,
-            LocalDateTime timestamp) {
+    public Transaction(String transactionId, String accountNumber, TransactionType type, double amount) {
         this.transactionId = transactionId;
         this.accountNumber = accountNumber;
         this.type = type;
         this.amount = amount;
-        this.timestamp = timestamp;
+        this.timestamp = LocalDateTime.now();
     }
 
     public String getTransactionId() {
@@ -38,4 +37,14 @@ public class Transaction {
         return timestamp;
     }
 
+    // @Override
+    // public String toString() {
+    //     return "Transaction [transactionId=" + transactionId + ", accountNumber=" + accountNumber + ", type=" + type
+    //             + ", amount=" + amount + ", timestamp=" + timestamp + "]";
+    // }
+
+    @Override
+    public String toString(){
+        return type + " of " + amount + " on account " + accountNumber + " at " + timestamp;
+    }
 }
