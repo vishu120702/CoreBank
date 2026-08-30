@@ -8,8 +8,8 @@ public class CurrentAccount extends Account {
     }
 
     @Override
-    public double getInterestRate() {
-        return 0.0;
+    public double getInterestRate(double balance) {
+        return balance > 50000 ? 3.5 : 0.0;
     }
 
     @Override

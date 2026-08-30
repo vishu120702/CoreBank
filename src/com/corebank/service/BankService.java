@@ -1,5 +1,7 @@
 package com.corebank.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.corebank.exception.AccountNotFoundException;
@@ -17,6 +19,11 @@ public class BankService {
     // Boot will later automate this exact wiring for you, which is part of why it's
     // worth doing manually now).
     private AccountRepository accountRepository;
+    private List<Transaction> ledger = new ArrayList<>();
+
+    public List<Transaction> getLedger() {
+        return ledger;
+    }
 
     public BankService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
@@ -39,9 +46,10 @@ public class BankService {
         Transaction txn = new Transaction(UUID.randomUUID().toString(), accountNumber, TransactionType.DEPOSIT, amount);
 
         TransactionLogger.logTransaction(txn);
+        ledger.add(txn);
     }
 
-    public void withdraw(String accountNumber, double amount)
+    public synchronized void withdraw(String accountNumber, double amount)
             throws AccountNotFoundException, InsufficientFundsException, MinimumBalanceViolationException {
         // Look up the account; throw if not found
         Account account = accountRepository.findById(accountNumber)
@@ -60,6 +68,7 @@ public class BankService {
             Transaction txn = new Transaction(UUID.randomUUID().toString(), accountNumber, TransactionType.WITHDRAW,
                     amount);
             TransactionLogger.logTransaction(txn);
+            ledger.add(txn);
         }
 
     }

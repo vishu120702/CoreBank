@@ -35,7 +35,7 @@ public abstract class Account{
         this.owner = owner;
     }
 
-    public abstract double getInterestRate();
+    public abstract double getInterestRate(double balance);
 
     public abstract double getMinimumBalance();
 
@@ -44,7 +44,10 @@ public abstract class Account{
         return "Account [accountNumer=" + accountNumer + ", balance=" + balance + ", owner=" + owner + "]";
     }
 
-    
+    // implement it here, once, non-abstract
+    public double calculateInterest() {
+        return this.getBalance() * this.getInterestRate(getBalance()) / 100;
+    }
 
     
     
