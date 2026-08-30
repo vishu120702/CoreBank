@@ -7,7 +7,7 @@ public class SavingsAccount extends Account {
     }
 
     @Override
-    public double getInterestRate() {
+    public double getInterestRate(double balance) {
         return 4.0;
     }
 
