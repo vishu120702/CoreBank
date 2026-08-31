@@ -1,4 +1,4 @@
-package com.corebank.model;
+package com.vishu.project.corebank.model;
 
 import java.time.LocalDateTime;
 
@@ -39,12 +39,13 @@ public class Transaction {
 
     // @Override
     // public String toString() {
-    //     return "Transaction [transactionId=" + transactionId + ", accountNumber=" + accountNumber + ", type=" + type
-    //             + ", amount=" + amount + ", timestamp=" + timestamp + "]";
+    // return "Transaction [transactionId=" + transactionId + ", accountNumber=" +
+    // accountNumber + ", type=" + type
+    // + ", amount=" + amount + ", timestamp=" + timestamp + "]";
     // }
 
     @Override
-    public String toString(){
+    public String toString() {
         return type + " of " + amount + " on account " + accountNumber + " at " + timestamp;
     }
 }

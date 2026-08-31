@@ -1,10 +1,10 @@
-package com.corebank.model;
+package com.vishu.project.corebank.model;
 
 public class CurrentAccount extends Account {
 
     public CurrentAccount(String accountNumer, double balance, Customer owner) {
         super(accountNumer, balance, owner);
-        
+
     }
 
     @Override
@@ -16,5 +16,5 @@ public class CurrentAccount extends Account {
     public double getMinimumBalance() {
         return 5000.0;
     }
-    
+
 }

@@ -1,4 +1,4 @@
-package com.corebank.exception;
+package com.vishu.project.corebank.exception;
 
 public class MinimumBalanceViolationException extends Exception {
     public MinimumBalanceViolationException(String accountNumber, double minBalance) {

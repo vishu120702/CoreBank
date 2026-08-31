@@ -1,4 +1,4 @@
-package com.corebank.repository;
+package com.vishu.project.corebank.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.corebank.model.Customer;
+import com.vishu.project.corebank.model.Customer;
 
 public class CustomerRepository implements Repository<Customer, String> {
 
@@ -32,5 +32,5 @@ public class CustomerRepository implements Repository<Customer, String> {
     public void deleteById(String customerId) {
         customers.remove(customerId);
     }
-    
+
 }

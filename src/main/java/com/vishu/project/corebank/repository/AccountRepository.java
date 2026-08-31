@@ -1,4 +1,4 @@
-package com.corebank.repository;
+package com.vishu.project.corebank.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.corebank.model.Account;
+import com.vishu.project.corebank.model.Account;
 
 public class AccountRepository implements Repository<Account, String> {
     private Map<String, Account> accounts = new HashMap<>();
@@ -17,7 +17,7 @@ public class AccountRepository implements Repository<Account, String> {
         return account;
     }
 
-     @Override
+    @Override
     public Optional<Account> findById(String accountNumber) {
         return Optional.ofNullable(accounts.get(accountNumber));
     }

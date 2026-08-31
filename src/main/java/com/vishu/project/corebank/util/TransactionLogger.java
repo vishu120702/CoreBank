@@ -1,10 +1,10 @@
-package com.corebank.util;
+package com.vishu.project.corebank.util;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import com.corebank.model.Transaction;
+import com.vishu.project.corebank.model.Transaction;
 
 public class TransactionLogger {
     // Open transactions.log in append mode, create a buffered writer around it,

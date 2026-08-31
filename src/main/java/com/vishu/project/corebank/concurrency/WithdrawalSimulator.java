@@ -1,19 +1,19 @@
-package com.corebank.concurrency;
+package com.vishu.project.corebank.concurrency;
 
-import com.corebank.exception.AccountNotFoundException;
-import com.corebank.exception.InsufficientFundsException;
-import com.corebank.exception.MinimumBalanceViolationException;
-import com.corebank.service.BankService;
+import com.vishu.project.corebank.exception.AccountNotFoundException;
+import com.vishu.project.corebank.exception.InsufficientFundsException;
+import com.vishu.project.corebank.exception.MinimumBalanceViolationException;
+import com.vishu.project.corebank.service.BankService;
 
-public class WithdrawalSimulator implements Runnable{
+public class WithdrawalSimulator implements Runnable {
     BankService bankService;
     String accountNumber;
     double amountToWithdraw;
 
-    public WithdrawalSimulator(BankService bankService, String accountNumber, double amountToWithdraw){
-        this.bankService=bankService;
-        this.accountNumber=accountNumber;
-        this.amountToWithdraw=amountToWithdraw;
+    public WithdrawalSimulator(BankService bankService, String accountNumber, double amountToWithdraw) {
+        this.bankService = bankService;
+        this.accountNumber = accountNumber;
+        this.amountToWithdraw = amountToWithdraw;
     }
 
     @Override
@@ -27,5 +27,5 @@ public class WithdrawalSimulator implements Runnable{
             System.out.println(Thread.currentThread().getName() + " failed (min balance): " + e.getMessage());
         }
     }
-    
+
 }

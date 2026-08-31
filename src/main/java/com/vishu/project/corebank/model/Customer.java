@@ -1,10 +1,10 @@
-package com.corebank.model;
+package com.vishu.project.corebank.model;
 
 public class Customer {
     private String customerId;
     private String name;
     private String email;
-    
+
     public Customer(String customerId, String name, String email) {
         this.customerId = customerId;
         this.name = name;
@@ -40,5 +40,4 @@ public class Customer {
         return "Customer [name=" + name + ", email=" + email + "]";
     }
 
-    
 }

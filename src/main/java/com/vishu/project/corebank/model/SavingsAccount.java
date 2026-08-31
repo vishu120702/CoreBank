@@ -1,4 +1,4 @@
-package com.corebank.model;
+package com.vishu.project.corebank.model;
 
 public class SavingsAccount extends Account {
 

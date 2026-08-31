@@ -1,6 +1,6 @@
-package com.corebank.model;
+package com.vishu.project.corebank.model;
 
-public abstract class Account{
+public abstract class Account {
     private String accountNumer;
     private double balance;
     private Customer owner;
@@ -49,6 +49,4 @@ public abstract class Account{
         return this.getBalance() * this.getInterestRate(getBalance()) / 100;
     }
 
-    
-    
 }

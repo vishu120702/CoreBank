@@ -1,31 +1,33 @@
-package com.corebank.service;
+package com.vishu.project.corebank.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.corebank.exception.AccountNotFoundException;
-import com.corebank.exception.InsufficientFundsException;
-import com.corebank.exception.MinimumBalanceViolationException;
-import com.corebank.model.Account;
-import com.corebank.model.Transaction;
-import com.corebank.model.TransactionType;
-import com.corebank.repository.AccountRepository;
-import com.corebank.util.TransactionLogger;
+import com.vishu.project.corebank.repository.JdbcAccountRepository;
+import com.vishu.project.corebank.util.TransactionLogger;
+
+import com.vishu.project.corebank.exception.AccountNotFoundException;
+import com.vishu.project.corebank.exception.InsufficientFundsException;
+import com.vishu.project.corebank.exception.MinimumBalanceViolationException;
+import com.vishu.project.corebank.model.Account;
+import com.vishu.project.corebank.model.Transaction;
+import com.vishu.project.corebank.model.TransactionType;
+import com.vishu.project.corebank.repository.AccountRepository;
 
 public class BankService {
 
     // his is just plain dependency injection, nothing framework-related yet (Spring
     // Boot will later automate this exact wiring for you, which is part of why it's
     // worth doing manually now).
-    private AccountRepository accountRepository;
+    private JdbcAccountRepository accountRepository;
     private List<Transaction> ledger = new ArrayList<>();
 
     public List<Transaction> getLedger() {
         return ledger;
     }
 
-    public BankService(AccountRepository accountRepository) {
+    public BankService(JdbcAccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
@@ -39,6 +41,7 @@ public class BankService {
         Account account = accountRepository.findById(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException(accountNumber));
         account.setBalance(account.getBalance() + amount);
+        accountRepository.save(accountNumber, account);
 
         // UUID is a built-in Java class (java.util.UUID) that produces a random,
         // effectively-unique 128-bit identifier, formatted as a string like
@@ -65,6 +68,7 @@ public class BankService {
         // Otherwise deduct, log a WITHDRAWAL transaction
         else {
             account.setBalance(account.getBalance() - amount);
+            accountRepository.save(accountNumber, account);
             Transaction txn = new Transaction(UUID.randomUUID().toString(), accountNumber, TransactionType.WITHDRAW,
                     amount);
             TransactionLogger.logTransaction(txn);
@@ -87,7 +91,7 @@ public class BankService {
         try {
             deposit(toAccount, amount);
         } catch (AccountNotFoundException e) {
-            deposit(fromAccount, amount);   //a transfer needs to be all-or-nothing
+            deposit(fromAccount, amount); // a transfer needs to be all-or-nothing
             throw e;
         }
 
