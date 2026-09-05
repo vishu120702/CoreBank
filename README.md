@@ -6,14 +6,15 @@ This project started as a plain Java practice application (OOP, exceptions, coll
 
 ---
 
-## Tech Stack
+## Technologies Used
 
-- **Java 21**
-- **Spring Boot 3.3.4**
-- **Spring Web** — REST API layer
-- **Spring Data JPA / Hibernate** — ORM and persistence
-- **PostgreSQL** — relational database
-- **Maven** — build and dependency management
+- Java
+- Spring Boot
+- Spring Data JPA
+- Hibernate
+- PostgreSQL
+- Maven
+- Postman
 
 ---
 
@@ -29,6 +30,19 @@ This project started as a plain Java practice application (OOP, exceptions, coll
 - Reporting endpoints (total balance, highest-balance account, high-value transactions, transactions by type)
 - Centralized exception handling with proper HTTP status codes
 - Multithreading/concurrency demo endpoint — simulates concurrent withdrawals on the same account to verify thread-safety (`synchronized`)
+
+---
+
+## API Testing
+
+REST APIs are developed and tested using Postman.
+
+The APIs cover operations such as:
+
+- Customer creation and retrieval
+- Account creation and retrieval
+- Transaction processing
+- Balance-related operations
 
 ---
 
