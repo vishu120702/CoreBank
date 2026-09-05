@@ -1,9 +1,21 @@
 package com.vishu.project.corebank.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="customers")
 public class Customer {
+    @Id
     private String customerId;
+
     private String name;
     private String email;
+
+    protected Customer(){}
+    // required by Hibernate — it builds objects via reflection,
+    // not by calling your constructor with args
 
     public Customer(String customerId, String name, String email) {
         this.customerId = customerId;

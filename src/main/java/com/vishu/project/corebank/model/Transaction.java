@@ -1,13 +1,23 @@
 package com.vishu.project.corebank.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name="transactions")
 public class Transaction {
+    @Id
     private String transactionId;
     private String accountNumber;
+
+    @Enumerated(EnumType.STRING)  // stores "DEPOSIT"/"WITHDRAW" as text, not 0/1
     private TransactionType type;
+
     private double amount;
     private LocalDateTime timestamp;
+
+    protected Transaction(){}; // Hibernate-only — same pattern as your other entities
 
     public Transaction(String transactionId, String accountNumber, TransactionType type, double amount) {
         this.transactionId = transactionId;

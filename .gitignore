@@ -1,0 +1,25 @@
+# Compiled output
+target/
+*.class
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# Logs
+*.log
+transaction.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Environment / secrets — see note below
+.env

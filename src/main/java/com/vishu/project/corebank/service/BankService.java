@@ -1,11 +1,10 @@
 package com.vishu.project.corebank.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-import com.vishu.project.corebank.repository.JdbcAccountRepository;
-import com.vishu.project.corebank.util.TransactionLogger;
+import com.vishu.project.corebank.repository.TransactionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vishu.project.corebank.exception.AccountNotFoundException;
 import com.vishu.project.corebank.exception.InsufficientFundsException;
@@ -14,86 +13,55 @@ import com.vishu.project.corebank.model.Account;
 import com.vishu.project.corebank.model.Transaction;
 import com.vishu.project.corebank.model.TransactionType;
 import com.vishu.project.corebank.repository.AccountRepository;
+import com.vishu.project.corebank.util.TransactionLogger;
 
+@Service
 public class BankService {
 
-    // his is just plain dependency injection, nothing framework-related yet (Spring
-    // Boot will later automate this exact wiring for you, which is part of why it's
-    // worth doing manually now).
-    private JdbcAccountRepository accountRepository;
-    private List<Transaction> ledger = new ArrayList<>();
+    @Autowired
+    private AccountRepository accountRepository;
 
-    public List<Transaction> getLedger() {
-        return ledger;
-    }
+    @Autowired
+    private TransactionRepository transactionRepository;
 
-    public BankService(JdbcAccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
-    }
 
     public void deposit(String accountNumber, double amount) throws AccountNotFoundException {
-        // AccountRepository accountRepository = new AccountRepository();
-        // if (!accountRepository.findById(accountNumber).isPresent())
-        // throw new AccountNotFoundException(accountNumber);
-        // else{
-        // accountRepository.findById(accountNumber).
-        // }
         Account account = accountRepository.findById(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException(accountNumber));
         account.setBalance(account.getBalance() + amount);
-        accountRepository.save(accountNumber, account);
+        accountRepository.save(account);   // <-- was save(accountNumber, account)
 
-        // UUID is a built-in Java class (java.util.UUID) that produces a random,
-        // effectively-unique 128-bit identifier, formatted as a string like
-        // "a1b2c3d4-e5f6-..."
         Transaction txn = new Transaction(UUID.randomUUID().toString(), accountNumber, TransactionType.DEPOSIT, amount);
-
+        transactionRepository.save(txn);
         TransactionLogger.logTransaction(txn);
-        ledger.add(txn);
     }
 
-    public synchronized void withdraw(String accountNumber, double amount)
+    public synchronized void withdraw(String accountNumber, double amount)//synchronized allows
             throws AccountNotFoundException, InsufficientFundsException, MinimumBalanceViolationException {
-        // Look up the account; throw if not found
         Account account = accountRepository.findById(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException(accountNumber));
 
-        // Check balance < amount → throw InsufficientFundsException
         if (account.getBalance() < amount)
             throw new InsufficientFundsException(accountNumber, account.getBalance(), amount);
-        // Check balance - amount < account.getMinimumBalance() → throw
-        // MinimumBalanceViolationException
         else if (account.getBalance() - amount < account.getMinimumBalance())
             throw new MinimumBalanceViolationException(accountNumber, account.getMinimumBalance());
-        // Otherwise deduct, log a WITHDRAWAL transaction
         else {
             account.setBalance(account.getBalance() - amount);
-            accountRepository.save(accountNumber, account);
-            Transaction txn = new Transaction(UUID.randomUUID().toString(), accountNumber, TransactionType.WITHDRAW,
-                    amount);
+            accountRepository.save(account);   // <-- was save(accountNumber, account)
+            Transaction txn = new Transaction(UUID.randomUUID().toString(), accountNumber, TransactionType.WITHDRAW, amount);
+            transactionRepository.save(txn);
             TransactionLogger.logTransaction(txn);
-            ledger.add(txn);
         }
-
     }
 
     public void transfer(String fromAccount, String toAccount, double amount)
             throws AccountNotFoundException, InsufficientFundsException, MinimumBalanceViolationException {
-        // the withdrawal already happened before the deposit failed. That's the bug
-        // made visible. This is a genuinely good thing to have witnessed firsthand,
-        // because it's precisely the problem @Transactional in Spring exists to solve
-        // later — a transfer needs to be all-or-nothing
-
-        // withdraw(fromAccount, amount);
-        // deposit(toAccount, amount);
-
         withdraw(fromAccount, amount);
         try {
             deposit(toAccount, amount);
         } catch (AccountNotFoundException e) {
-            deposit(fromAccount, amount); // a transfer needs to be all-or-nothing
+            deposit(fromAccount, amount);
             throw e;
         }
-
     }
 }
