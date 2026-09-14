@@ -36,14 +36,6 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<Account> create(@RequestBody CreateAccountRequest request) throws CustomerNotFoundException {
 
-//        Account account;
-//        if(request.getType() == AccountType.SAVINGS){
-//            account = new SavingsAccount(request.getAccountNumer(), request.getInitialBalance(), owner);
-//        }
-//        else{
-//            account = new CurrentAccount(request.getAccountNumer(), request.getInitialBalance(), owner);
-//        }
-
         Customer owner = customerRepository.findById(request.getCustomerId())
                 .orElseThrow(() -> new CustomerNotFoundException(request.getCustomerId()));
 

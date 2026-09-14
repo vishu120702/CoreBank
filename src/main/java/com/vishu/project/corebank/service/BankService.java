@@ -24,7 +24,6 @@ public class BankService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-
     public void deposit(String accountNumber, double amount) throws AccountNotFoundException {
         Account account = accountRepository.findById(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException(accountNumber));

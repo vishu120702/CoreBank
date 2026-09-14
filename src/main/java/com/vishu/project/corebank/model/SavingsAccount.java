@@ -24,5 +24,4 @@ public class SavingsAccount extends Account {
     public double getMinimumBalance() {
         return 1000.0;
     }
-
 }

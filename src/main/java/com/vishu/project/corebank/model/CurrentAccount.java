@@ -26,5 +26,4 @@ public class CurrentAccount extends Account {
     public double getMinimumBalance() {
         return 5000.0;
     }
-
 }

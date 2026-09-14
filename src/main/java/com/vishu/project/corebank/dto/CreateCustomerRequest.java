@@ -30,4 +30,3 @@ public class CreateCustomerRequest {
         this.email = email;
     }
 }
-

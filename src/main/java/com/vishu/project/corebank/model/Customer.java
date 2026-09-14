@@ -51,5 +51,4 @@ public class Customer {
     public String toString() {
         return "Customer [name=" + name + ", email=" + email + "]";
     }
-
 }

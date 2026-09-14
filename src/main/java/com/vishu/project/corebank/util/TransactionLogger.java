@@ -21,5 +21,4 @@ public class TransactionLogger {
             System.out.println("Failed to log transaction: " + e.getMessage());
         }
     }
-
 }

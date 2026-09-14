@@ -66,5 +66,4 @@ public abstract class Account {
     public double calculateInterest() {
         return this.getBalance() * this.getInterestRate(getBalance()) / 100;
     }
-
 }

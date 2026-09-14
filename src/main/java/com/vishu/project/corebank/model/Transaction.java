@@ -47,13 +47,6 @@ public class Transaction {
         return timestamp;
     }
 
-    // @Override
-    // public String toString() {
-    // return "Transaction [transactionId=" + transactionId + ", accountNumber=" +
-    // accountNumber + ", type=" + type
-    // + ", amount=" + amount + ", timestamp=" + timestamp + "]";
-    // }
-
     @Override
     public String toString() {
         return type + " of " + amount + " on account " + accountNumber + " at " + timestamp;
