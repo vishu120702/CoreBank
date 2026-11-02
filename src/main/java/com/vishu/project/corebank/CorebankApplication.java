@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CorebankApplication {
     public static void main(String[] args) {
         SpringApplication.run(CorebankApplication.class, args);
-        System.out.println("Working Fine");
+        System.out.println("Apllication Started.....");
     }
 }
