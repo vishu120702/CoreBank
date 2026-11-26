@@ -46,7 +46,7 @@ public class BankService {
             throw new MinimumBalanceViolationException(accountNumber, account.getMinimumBalance());
         else {
             account.setBalance(account.getBalance() - amount);
-            accountRepository.save(account);   // <-- was save(accountNumber, account)
+            accountRepository.save(account);
             Transaction txn = new Transaction(UUID.randomUUID().toString(), accountNumber, TransactionType.WITHDRAW, amount);
             transactionRepository.save(txn);
             TransactionLogger.logTransaction(txn);
