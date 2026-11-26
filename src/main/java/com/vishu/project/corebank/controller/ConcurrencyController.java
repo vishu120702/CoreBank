@@ -1,21 +1,16 @@
 package com.vishu.project.corebank.controller;
 
-import com.vishu.project.corebank.concurrency.WithdrawalSimulator;
 import com.vishu.project.corebank.dto.SimulateWithdrawalsRequest;
 import com.vishu.project.corebank.service.SimulationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 @RestController
 @RequestMapping("/api/simulate")
 public class ConcurrencyController {
 
-   @Autowired
+    @Autowired
     private SimulationService simulationService;
 
     @PostMapping("/withdrawals")
