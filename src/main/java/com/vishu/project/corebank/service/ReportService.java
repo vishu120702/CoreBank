@@ -25,6 +25,10 @@ public class ReportService {
     @Autowired
     BankService bankService;
 
+    public List<Transaction> getAllTransactions() {
+        return transactionRepository.findAll();
+    }
+
     public double getTotalBankBalance(){
         return accountRepository.findAll().stream()
                 .mapToDouble(Account::getBalance)
