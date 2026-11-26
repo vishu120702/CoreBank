@@ -8,6 +8,7 @@ import com.vishu.project.corebank.exception.InsufficientFundsException;
 import com.vishu.project.corebank.exception.MinimumBalanceViolationException;
 import com.vishu.project.corebank.model.*;
 import com.vishu.project.corebank.service.BankService;
+import com.vishu.project.corebank.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,9 @@ import java.util.List;
 public class AccountController {
     @Autowired
     BankService bankService;
+
+    @Autowired
+    AccountService accountService;
 
     @GetMapping
     public List<Account> getAll(){
