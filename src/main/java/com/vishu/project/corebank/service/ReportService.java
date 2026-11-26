@@ -22,9 +22,6 @@ public class ReportService {
     @Autowired
     TransactionRepository transactionRepository;
 
-    @Autowired
-    BankService bankService;
-
     public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
     }
@@ -33,7 +30,7 @@ public class ReportService {
         return accountRepository.findAll().stream()
                 .mapToDouble(Account::getBalance)
                 .sum();
-    };
+    }
 
     public List<Transaction> getHighValueTransactions(double threshold) {
         return transactionRepository.findByAmountGreaterThan(threshold);   // real SQL query now
