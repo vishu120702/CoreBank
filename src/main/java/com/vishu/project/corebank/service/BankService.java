@@ -28,14 +28,14 @@ public class BankService {
         Account account = accountRepository.findById(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException(accountNumber));
         account.setBalance(account.getBalance() + amount);
-        accountRepository.save(account);   // <-- was save(accountNumber, account)
+        accountRepository.save(account);
 
         Transaction txn = new Transaction(UUID.randomUUID().toString(), accountNumber, TransactionType.DEPOSIT, amount);
         transactionRepository.save(txn);
         TransactionLogger.logTransaction(txn);
     }
 
-    public synchronized void withdraw(String accountNumber, double amount)//synchronized allows
+    public synchronized void withdraw(String accountNumber, double amount)
             throws AccountNotFoundException, InsufficientFundsException, MinimumBalanceViolationException {
         Account account = accountRepository.findById(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException(accountNumber));
