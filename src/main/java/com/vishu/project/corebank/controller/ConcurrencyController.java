@@ -2,7 +2,7 @@ package com.vishu.project.corebank.controller;
 
 import com.vishu.project.corebank.concurrency.WithdrawalSimulator;
 import com.vishu.project.corebank.dto.SimulateWithdrawalsRequest;
-import com.vishu.project.corebank.service.BankService;
+import com.vishu.project.corebank.service.SimulationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,24 +15,21 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/api/simulate")
 public class ConcurrencyController {
 
-    @Autowired
-    private BankService bankService;   // the ONE singleton instance — this is the whole point
+   @Autowired
+    private SimulationService simulationService;
 
     @PostMapping("/withdrawals")
     public ResponseEntity<String> simulateWithdrawals(@RequestBody SimulateWithdrawalsRequest request)
             throws InterruptedException {
 
-        ExecutorService executor = Executors.newFixedThreadPool(request.getNumberOfThreads());
+        boolean finishedInTime = simulationService.simulateWithdrawals(
+                request.getAccountNumber(), request.getAmount(), request.getNumberOfThreads());
 
-        for (int i = 0; i < request.getNumberOfThreads(); i++) {
-            executor.execute(new WithdrawalSimulator(
-                    bankService, request.getAccountNumber(), request.getAmount()));
+        if (!finishedInTime) {
+            return ResponseEntity.status(503)
+                    .body("Some withdrawal threads did not finish within 10 seconds");
         }
-
-        executor.shutdown();
-        executor.awaitTermination(10, TimeUnit.SECONDS);
-
         return ResponseEntity.ok(request.getNumberOfThreads() +
-                " concurrent withdrawal attempts submitted — check your IDE's Run console for per-thread results");
+                " concurrent withdrawal attempts completed. Check your IDE's Run console for per-thread results");
     }
 }
