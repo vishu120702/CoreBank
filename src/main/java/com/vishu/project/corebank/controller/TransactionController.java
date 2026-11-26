@@ -7,7 +7,6 @@ import com.vishu.project.corebank.exception.MinimumBalanceViolationException;
 import com.vishu.project.corebank.model.Account;
 import com.vishu.project.corebank.model.Transaction;
 import com.vishu.project.corebank.model.TransactionType;
-import com.vishu.project.corebank.repository.TransactionRepository;
 import com.vishu.project.corebank.service.BankService;
 import com.vishu.project.corebank.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,6 @@ public class TransactionController {
     private BankService bankService;
     @Autowired
     private ReportService reportService;
-    @Autowired
-    private TransactionRepository transactionRepository;
 
     @PostMapping("/transfer")
     public ResponseEntity<String> transfer(@RequestBody TransferRequest request)
@@ -38,7 +35,7 @@ public class TransactionController {
 
     @GetMapping("/transactions")
     public List<Transaction> getAll() {
-        return transactionRepository.findAll();
+        return reportService.getAllTransactions();
     }
 
     @GetMapping("/reports/total-balance")
